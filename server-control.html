@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AGHOST Server Control</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="main-layout">
+    <nav class="sidebar">
+      <h2>AGHOST</h2>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="server-control.html">Server Control</a></li>
+        <li id="adminPanelLink" style="display:none;"><a href="admin-panel.html">Admin Panel</a></li>
+        <li><button onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+    <main class="content">
+      <h1>Minecraft Server Control Panel</h1>
+      <table>
+        <tr><th>Server Name</th><th>Status</th><th>Controls</th></tr>
+        <tr>
+          <td>SurvivalWorld</td>
+          <td id="server1status"><span class="status-online">Online</span></td>
+          <td>
+            <button onclick="toggleServer('server1')">Stop</button>
+            <button onclick="restartServer('server1')">Restart</button>
+          </td>
+        </tr>
+        <tr>
+          <td>CreativeHub</td>
+          <td id="server2status"><span class="status-offline">Offline</span></td>
+          <td>
+            <button onclick="toggleServer('server2')">Start</button>
+            <button onclick="restartServer('server2')">Restart</button>
+          </td>
+        </tr>
+      </table>
+    </main>
+  </div>
+  <script>
+    window.onload = function() {
+      const role = localStorage.getItem('aghostRole');
+      if (role === "owner" || role === "admin") {
+        document.getElementById('adminPanelLink').style.display = "block";
+      }
+    };
+    function logout() {
+      localStorage.removeItem('aghostUser');
+      localStorage.removeItem('aghostRole');
+      window.location.href = "index.html";
+    }
+    function toggleServer(server) {
+      let statusEl = document.getElementById(server + "status");
+      if (statusEl.innerText.includes("Online")) {
+        statusEl.innerHTML = "<span class='status-offline'>Offline</span>";
+        alert("Server stopped!");
+      } else {
+        statusEl.innerHTML = "<span class='status-online'>Online</span>";
+        alert("Server started!");
+      }
+    }
+    function restartServer(server) {
+      let statusEl = document.getElementById(server + "status");
+      statusEl.innerHTML = "<span class='status-online'>Online</span>";
+      alert("Server restarted!");
+    }
+  </script>
+</body>
+</html>
