@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile - AGHOST Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header">AGHOST Minecraft Panel</div>
+  <div class="main-layout">
+    <nav class="sidebar">
+      <h2>AGHOST</h2>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="server-control.html">Server Control</a></li>
+        <li id="adminPanelLink" style="display:none;"><a href="admin-panel.html">Admin Panel</a></li>
+        <li><a href="chat-console.html">Server Chat</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><button onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+    <main class="content">
+      <h1>User Profile</h1>
+      <p><strong>Username:</strong> <span id="profileUser"></span></p>
+      <p><strong>Role:</strong> <span id="profileRole"></span></p>
+      <p><strong>Coins:</strong> <span id="profileCoins"></span></p>
+      <p><strong>Rank:</strong> <span id="profileRank"></span></p>
+    </main>
+  </div>
+  <script>
+    window.onload = function() {
+      const user = localStorage.getItem("aghostUser");
+      const role = localStorage.getItem("aghostRole");
+      const coins = localStorage.getItem("aghostCoins");
+      const rank = localStorage.getItem("aghostRank");
+      if (!user || !role) {
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("profileUser").textContent = user;
+        document.getElementById("profileRole").textContent = role;
+        document.getElementById("profileCoins").textContent = coins;
+        document.getElementById("profileRank").textContent = rank;
+        if (role === "owner" || role === "admin") {
+          document.getElementById('adminPanelLink').style.display = "block";
+        }
+      }
+    }
+    function logout() {
+      localStorage.removeItem('aghostUser');
+      localStorage.removeItem('aghostRole');
+      localStorage.removeItem('aghostCoins');
+      localStorage.removeItem('aghostRank');
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
